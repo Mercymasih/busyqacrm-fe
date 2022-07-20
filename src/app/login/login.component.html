@@ -1,0 +1,37 @@
+<div class="container mt-5 w-50">
+    
+    <div class="jumbotron bg-white border border-primary mt-3 ">
+        
+        <form #loginform="ngForm" (ngSubmit)="loginUser(loginform.value)">
+            <div class="form-group row text-left">
+                <label class=" col-3 col-form-label ">Username</label>
+                <div class="col-8 ">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Type in username" [ngModel]="user.username" #usrname="ngModel" required
+                    minlength=6  pattern="[A-Za-z0-9_]*">
+                    <div>
+                        <small class="text-danger"*ngIf="usrname.errors?.['minlength']">Username must be at least 6 characters long</small>
+                        <small class="text-danger"*ngIf="usrname.errors?.['pattern']">Username cannot have blankspaces or any other characters</small>
+                      </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-3 col-form-label text-right">Password</label>
+                <div class="col-8 ">
+                <input type="password" class="form-control" id="password" name="password"placeholder="Type in password" [ngModel]="user.password" #password="ngModel"
+                minlength="6" pattern="[^\s]*"required>
+                <div>
+                    <small class="text-danger"*ngIf="password.errors?.['minlength']">Password must be at least 6 characters long</small>
+                    <small class="text-danger"*ngIf="password.errors?.['pattern']">Password cannot have blankspaces</small>
+                  </div>
+                </div>
+            </div>
+            
+            <div class="row mx-md-n1">
+                <div class="px-md-4"><button type="submit" class="btn btn-info"[disabled]="loginform.invalid">Login</button></div>
+                <div class="px-md-4"><button type="reset" class="btn btn-warning" value="Reset">Cancel</button></div>
+                
+            </div>
+            <h6 class="float-right mt-3" [routerLink]="['/signupuser']">New User? Register Here</h6>
+        </form>
+    </div>
+</div>

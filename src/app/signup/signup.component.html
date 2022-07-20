@@ -1,0 +1,95 @@
+<div class="container mt-5 w-75">
+  <div class="jumbotron bg-white border border-warning mt-3 py-4">
+    <h1 class="display-5 mb-3"></h1> 
+    <form #signupform="ngForm" (ngSubmit)="signupUser(signupform.value)">
+      <div class="form-group row text-left">
+        <label class="col-3 col-form-label">Id</label>
+        <div class="col-8 ">
+          <input type="text" class="form-control" name="idUser"  ngModel readonly>
+        </div>
+      </div>
+      <div class="form-group row text-left">
+        <label class="col-3 col-form-label">First Name</label>
+        <div class="col-8 ">
+          <input type="text" class="form-control" name="first_name" placeholder="Type in First Name" #fname="ngModel" 
+           minlength=6  pattern="[A-Za-z][^0-9]*" ngModel required>
+            <div>
+              <small class="text-danger"*ngIf="fname.errors?.['minlength']">Firstname must be at least 6 characters long</small>
+              <small class="text-danger"*ngIf="fname.errors?.['pattern']">Firstname must only have alphabets</small>
+            </div> 
+        </div>
+      </div>
+      <div class="form-group row text-left">
+        <label class=" col-3 col-form-label">Last Name</label>
+        <div class="col-8 ">
+        <input type="text" class="form-control"  name="last_name" placeholder="Type in Last Name" #lname="ngModel"
+        minlength=6  pattern="[A-Za-z][^0-9]*" ngModel required>
+        <div>
+          <small class="text-danger"*ngIf="lname.errors?.['minlength']">Lastname must be at least 6 characters long</small>
+          <small class="text-danger"*ngIf="lname.errors?.['pattern']">Lastname must only have alphabets</small>
+        </div>
+        </div>
+      </div>
+      <div class="form-group row text-left">
+        <label class="col-3 col-form-label">Username</label>
+        <div class="col-8 ">
+        <input type="text" class="form-control"  name="username" placeholder="Type in Username" #usrname ="ngModel" 
+          minlength=6  pattern="[A-Za-z0-9_]*" ngModel required>
+          <div>
+            <small class="text-danger"*ngIf="usrname.errors?.['minlength']">Username must be at least 6 characters long</small>
+            <small class="text-danger"*ngIf="usrname.errors?.['pattern']">Username cannot have blankspaces or any other characters</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row text-left">
+        <label class="col-3 col-form-label">Password</label>
+        <div class="col-8 ">
+        <input type="password" class="form-control"  name="password" placeholder="Type in Password" #password="ngModel"
+        minlength=6  pattern="[^\s]*"ngModel required>
+        <div>
+          <small class="text-danger"*ngIf="password.errors?.['minlength']">Password must be at least 6 characters long</small>
+          <small class="text-danger"*ngIf="password.errors?.['pattern']">Password cannot have blankspaces</small>
+        </div>
+        </div>
+      </div>
+      <div class="form-group row text-left">
+        <label class="col-3 col-form-label">Email</label>
+        <div class="col-8 ">
+        <input type="email" class="form-control"  name="email" placeholder="Type in Email" email="true" #emailid="ngModel"
+        minlength="6" ngModel required>
+        <div>
+          <small class="text-danger"*ngIf="emailid.errors?.['minlength']">Email must be at least 6 characters long</small>
+          <small class="text-danger"*ngIf="emailid.errors?.['email']">Enter a valid Email address</small>
+        </div>
+        </div>
+      </div>
+      <div class="form-group row text-left">
+        <label class="col-3 col-form-label">Phone </label>
+        <div class="col-8 ">
+        <input type="text" class="form-control" name="phone" placeholder="Type in Phone Number" #phone="ngModel"
+          minlength="10" pattern="[0-9]*" ngModel required>
+          <div>
+            <small class="text-danger"*ngIf="phone.errors?.['minlength']">Phone number must be at least 10 digits long</small>
+            <small class="text-danger"*ngIf="phone.errors?.['pattern']">Phone number can only have numbers</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row text-left">
+        <label class="col-3 col-form-label">Role</label>
+        <div class="col-8 ">
+        <select class="form-control custom-select" ngModel name="role">
+          <option selected>Select a Role</option>
+          <option selected>Admin</option>
+          <option selected>Manager</option>
+          <option selected>Simple User</option>
+        </select>
+        </div>
+      </div>
+      <div class="row mx-md-n1">
+        <div class="px-md-4"><button type="submit" class="btn btn-info mt-2" style="min-width: 100px;">SignUp</button></div>
+        <div class="px-md-4"><button type="reset" class="btn btn-warning mt-2" style="min-width: 100px;"value="Reset">Cancel</button></div>
+      </div>
+      <h6 class="float-right " [routerLink]="['/loginuser']">Existing User? Login Here</h6>
+    </form>
+  </div>
+</div>
