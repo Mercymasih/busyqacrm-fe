@@ -26,7 +26,7 @@ export class UserService {
     return this.http
              .post<User>(
                environment.host + '/signup', 
-               user 
+               user,{ headers :this.requestHeader}
              );
   } 
   

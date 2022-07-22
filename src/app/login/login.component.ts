@@ -26,7 +26,7 @@ export class LoginComponent  {
    loginUser(user:User): void {
     this.userService.loginUser(user).subscribe(
       (data : any) => {
-         this.userAuth.setToken(data.jwtToken);
+         this.userAuth.setToken(data.Token);
          console.log("User Logged In");
          this.router.navigate(['/welcome']);
        }

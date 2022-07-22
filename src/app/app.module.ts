@@ -29,7 +29,6 @@ import { UserService } from './user.service';
     
   ],
   providers: [
-    AuthGuard,
     {
       provide:HTTP_INTERCEPTORS,
       useClass:AuthInterceptor,

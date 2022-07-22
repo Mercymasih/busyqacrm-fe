@@ -23,8 +23,8 @@ export class SignupComponent {
 
       console.log(user);
       this.userservice.signupUser(user).subscribe(
-        data => {
-        console.log(data);
+        response => {
+        console.log(response);
         this.router.navigate(['/loginuser']); 
       });
       
