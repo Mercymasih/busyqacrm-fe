@@ -6,11 +6,12 @@ import { SignupComponent } from './signup/signup.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
-  {path:'',component: LoginComponent},
-  {path:'welcome',component: WelcomeComponent},
-  {path:'signupuser',component: SignupComponent},
-  {path:'loginuser',component: LoginComponent}
-
+  
+  {path:'',component: LoginComponent,pathMatch: 'full'},
+  {path:'loginuser',component: LoginComponent,pathMatch: 'full'},
+  {path:'welcome',component: WelcomeComponent,pathMatch: 'full',canActivate:[AuthGuard]},
+  {path:'signupuser',component: SignupComponent,pathMatch: 'full'}
+  
 ];
 
 @NgModule({

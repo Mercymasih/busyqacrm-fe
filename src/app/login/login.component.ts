@@ -15,20 +15,32 @@ import { UserAuthService } from '../user-auth.service';
 export class LoginComponent  {
   
   user: User = <User>{};
-  credentials = {username: '', password: ''};
+  
 
   constructor(private userService:UserService,private router: Router,
-    private http: HttpClient,private userAuth:UserAuthService) { }
+    private http: HttpClient,private authService:UserAuthService) { }
 
   ngOnInit(): void {
   }
 
    loginUser(user:User): void {
-    this.userService.loginUser(user).subscribe(
-      (data : any) => {
-         this.userAuth.setToken(data.Token);
+    //generate token 
+    this.authService.generateToken(user).subscribe(
+      (response : any) => {
          console.log("User Logged In");
-         this.router.navigate(['/welcome']);
+         console.log(response);
+
+         //login-save token in local storage
+         this.authService.setToken(response.token);
+
+         //get current User- save user in local storage
+         this.authService.getCurrentUser().subscribe(
+          (user: any) =>{
+            this.authService.setUser(user)
+            console.log(user);
+            this.router.navigate(['/welcome']);
+          });
+         
        }
       );
   

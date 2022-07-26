@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { User } from './user.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -6,14 +9,34 @@ import { Router } from '@angular/router';
 })
 export class UserAuthService {
 
-  constructor(public router : Router) { }
+  requestHeader= new HttpHeaders(
+    {"No-Auth":"True"}
+  );
+  constructor(private http: HttpClient,public router : Router) { }
 
-  public setToken(Token: string){
-    localStorage.setItem("jwtToken",Token);
+
+  public getCurrentUser(){
+    return this.http
+             .get(
+               environment.host + '/current-user'  
+             );
+  }
+  public generateToken(user: User) {
+    return this.http
+             .post<User>(
+               environment.host + '/authenticate',user,
+               { headers :this.requestHeader}
+             );
+
+  } 
+
+  public setToken(token: string){
+    localStorage.setItem("token",token);
+    return true;
   }
 
   public getToken(): string{
-    let token : any =localStorage.getItem("jwtToken");
+    let token : any =localStorage.getItem("token");
     token = token === null ? undefined : token;
     return (token);
   }
@@ -22,15 +45,38 @@ export class UserAuthService {
     localStorage.clear();
   }
 
-  get isLoggedIn(): boolean {
-    let authToken = localStorage.getItem("jwtToken");
-    return authToken !== null ? true : false;
+  public isLoggedIn(){
+    let authToken = localStorage.getItem("token");
+    if(authToken == undefined || authToken =='' || authToken == null){
+      return false;
+    }else{
+      return true;
+    }
   }
 
-  doLogout() {
-    let removeToken = localStorage.removeItem("jwtToken");
-    if (removeToken == null) {
-      this.router.navigate(['/login']);
+  public logout() {
+    let removeToken = localStorage.removeItem("token");
+    let removeUser = localStorage.removeItem("user");
+    if (removeToken == null && removeUser == null) {
+      this.router.navigate(['/loginuser']);
+    }
+    return true;
+  }
+
+  //Set User Detail
+  public setUser(user: any)
+  {
+    localStorage.setItem('user',JSON.stringify(user));
+  }
+
+  //get User 
+  public getUser(){
+    let userStr =localStorage.getItem("user");
+    if(userStr !=null ){
+      return JSON.parse(userStr);
+    }else{
+      this.logout();
+      return null;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError, Observable, throwError } from "rxjs";
@@ -10,35 +10,33 @@ export class AuthInterceptor implements HttpInterceptor{
     constructor(private authService:UserAuthService,
                 private router:Router){}
     
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if(req.headers.get('No-Auth')=== 'True'){
-            return next.handle(req.clone());
-        }
+    intercept(
+        req: HttpRequest<any>, 
+        next: HttpHandler
+        ): Observable<HttpEvent<any>> {
+
+        let authReq= req;
         const token = this.authService.getToken();
-
-        req = this.addToken(req,token);
-
-        return next.handle(req).pipe(
-            catchError(
-                (err:HttpErrorResponse)=>{
-                    console.log(err.status);
-                    if(err.status === 401){
-                        this.router.navigate(['/loginuser']);
-                    }
-                    return throwError(()=>"Something is wrong");
-                }
-            )
-        );
-    }
-
-    private addToken(request:HttpRequest<any>, token:string){
-        return request.clone(
-            {
-                setHeaders:{
-                    Authorization : `Bearer ${token}`
-                }
-            }
-        );
-    }
         
+        console.log("Inside Interceptor");
+        if(token != null){
+            authReq = authReq.clone(
+                {
+                    setHeaders:{
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+         }
+        return next.handle(authReq);
+    }       
 }
+
+export const authInterceptorProviders = [
+
+{
+    provide:HTTP_INTERCEPTORS,
+    useClass:AuthInterceptor,
+    multi:true
+},
+    
+];

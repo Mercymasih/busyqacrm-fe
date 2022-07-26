@@ -14,14 +14,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public loginUser(loginData: User) {
-    return this.http
-             .post<User>(
-               environment.host + '/authenticate',loginData
-              ,{ headers :this.requestHeader}
-             );
-
-  } 
+  
   public signupUser(user: User) {
     return this.http
              .post<User>(
