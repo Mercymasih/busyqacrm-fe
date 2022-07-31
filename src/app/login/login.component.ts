@@ -15,36 +15,63 @@ import { UserAuthService } from '../user-auth.service';
 export class LoginComponent  {
   
   user: User = <User>{};
-  
+  loggedIn :boolean= false;
+  msg='';
+  show :boolean = false;
 
   constructor(private userService:UserService,private router: Router,
     private http: HttpClient,private authService:UserAuthService) { }
 
   ngOnInit(): void {
   }
-
+      
+  
    loginUser(user:User): void {
+
     //generate token 
-    this.authService.generateToken(user).subscribe(
-      (response : any) => {
+    this.authService.generateToken(user).subscribe({
+      next: (response : any) => {
          console.log("User Logged In");
          console.log(response);
-
+         
+         this.show= true;
+          this.msg="Login Successful !!"
          //login-save token in local storage
          this.authService.setToken(response.token);
 
          //get current User- save user in local storage
-         this.authService.getCurrentUser().subscribe(
-          (user: any) =>{
+         this.authService.getCurrentUser().subscribe({
+          next :(user: any) =>{
             this.authService.setUser(user)
             console.log(user);
-            this.router.navigate(['/welcome']);
-          });
+            this.loggedIn= true;
+            //naviage to Welcome Page when login successfull
+            setTimeout(()=>{
+              this.router.navigate(['/welcome']);
+            },1500);
+            
+          },error: (error: any)=>{
+            this.loggedIn= false;
+            this.show= true;
+            this.msg=error.message;
+          }
+        });
+          
          
-       }
-      );
-  
+      },error: (error: any)=>{
+          this.loggedIn= false;
+          this.show= true;
+          this.msg=error.message;
+      }
+    });
+      this.show = true;
+      setTimeout(() => {
+      this.show = false;
+      },3000);
+      
+   }
+   onAlertClosed(){
+    this.loggedIn = false;
+    
   }
-  
-  
 }

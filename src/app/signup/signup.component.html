@@ -1,7 +1,16 @@
 <div class="container mt-5 w-75">
+  <div class="alert alert-dismissible fade show mt-2" role="alert"
+     *ngIf="show" [ngClass]="created ? 'alert-success' : 'alert-danger'" >
+    <span *ngIf="created">{{msg}}</span>
+    <span *ngIf="!created">{{msg}}</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="show=false">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   <div class="jumbotron bg-white border border-warning mt-3 py-4">
-    <h1 class="display-5 mb-3"></h1> 
+    <h3 class="display-5 mb-3" style="color:Tomato;">Sign up</h3> 
     <form #signupform="ngForm" (ngSubmit)="signupUser(signupform.value)">
+    
       <div class="form-group row text-left">
         <label class="col-3 col-form-label">Id</label>
         <div class="col-8 ">
@@ -89,7 +98,7 @@
         <div class="px-md-4"><button type="submit" class="btn btn-info mt-2" style="min-width: 100px;">SignUp</button></div>
         <div class="px-md-4"><button type="reset" class="btn btn-warning mt-2" style="min-width: 100px;"value="Reset">Cancel</button></div>
       </div>
-      <h6 class="float-right " [routerLink]="['/loginuser']">Existing User? Login Here</h6>
+      <h5 class="float-right " style="color:Tomato;"[routerLink]="['/loginuser']">Existing User? Login Here</h5>
     </form>
   </div>
 </div>

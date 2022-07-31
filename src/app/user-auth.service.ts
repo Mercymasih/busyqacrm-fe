@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User } from './user.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,14 @@ export class UserAuthService {
   );
   constructor(private http: HttpClient,public router : Router) { }
 
-
+  //get current user from the backend using '/current-user' endpoint
   public getCurrentUser(){
     return this.http
-             .get(
-               environment.host + '/current-user'  
+             .get<User>(
+               environment.host + '/current-user'
              );
   }
+  //generate token by accessing '/authenticate' end point the backend
   public generateToken(user: User) {
     return this.http
              .post<User>(
@@ -29,22 +31,23 @@ export class UserAuthService {
              );
 
   } 
-
+  //save token in the local storage
   public setToken(token: string){
     localStorage.setItem("token",token);
     return true;
   }
-
+  //get token from local storage
   public getToken(): string{
     let token : any =localStorage.getItem("token");
     token = token === null ? undefined : token;
     return (token);
   }
-
+  //clear local storage
   public clear() {
     localStorage.clear();
   }
 
+  //method to check is User logged in by getting the token from the local storage
   public isLoggedIn(){
     let authToken = localStorage.getItem("token");
     if(authToken == undefined || authToken =='' || authToken == null){
@@ -53,7 +56,7 @@ export class UserAuthService {
       return true;
     }
   }
-
+  //logout method
   public logout() {
     let removeToken = localStorage.removeItem("token");
     let removeUser = localStorage.removeItem("user");
@@ -80,3 +83,5 @@ export class UserAuthService {
     }
   }
 }
+
+

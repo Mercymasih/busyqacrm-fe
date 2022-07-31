@@ -1,8 +1,19 @@
-<div class="jumbotron bg-light border border-warning mt-3 py-4" style="min-height: 450px;" >
 
-  <div class="px-md-4 float-right"><button type=" button"class="btn btn-danger right "(click)="onLogout()">Logout</button></div>
- 
+<div class="container">
+  <!--<div class="alert alert-success" role="alert" *ngIf="loggedIn">
+    Login Success!
 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="onAlertClosed()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>-->
+  
+  <div class="jumbotron bg-light border border-warning mt-7 py-4" style="min-height: 450px;" >
+    <div class="row mx-md-n1 float-right">
+      <div class="px-md-2 "><button type="submit" class="btn btn-info"[routerLink]="['']">Home</button></div>
+      <div class="px-md-2 "><button type=" button"class="btn btn-warning"(click)="onLogout()">Logout</button></div>
+    </div>
+  
     <h1 class="display-2 text-center text-success" style="margin-top: 50px;">Welcome to BusyQA</h1>
     <hr class="w-75">
     <p class="lead text-center text-muted">We provide tech consulting services, outsourcing, corporate training and career development seminars that can transform your technology team into a lean mean efficient machine.</p>
@@ -10,3 +21,4 @@
     
 
   </div>
+</div>

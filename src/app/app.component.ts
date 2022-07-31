@@ -10,8 +10,9 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'busyqacrm-fe';
+  
   constructor(private app: UserService,private http: HttpClient, private router: Router) {
       
    }
-    
+   
 }

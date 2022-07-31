@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { User } from './user.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs/internal/Observable';
+import { catchError, throwError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +17,15 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  
-  public signupUser(user: User) {
+  //Sign Up User accessing '/signup' endpoint from the backend
+  public createUser(user: User) :Observable<any>{
     return this.http
              .post<User>(
                environment.host + '/signup', 
                user,{ headers :this.requestHeader}
+               
              );
-  } 
   
- 
+  }
 
 }
-  

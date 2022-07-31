@@ -1,12 +1,15 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,HTTP_INTERCEPTORS } from "@angular/common/http";
+import { error } from "@angular/compiler/src/util";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError, Observable, throwError } from "rxjs";
 import { UserAuthService } from "../user-auth.service";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthInterceptor implements HttpInterceptor{
-
+    msg :string ='';
     constructor(private authService:UserAuthService,
                 private router:Router){}
     
@@ -27,7 +30,14 @@ export class AuthInterceptor implements HttpInterceptor{
                     },
                 });
          }
-        return next.handle(authReq);
+        return next.handle(authReq)
+        .pipe(
+           catchError((error: HttpErrorResponse)=>{
+               this.msg=error.message;
+               //alert(error.message);
+                return throwError(()=>error.error);    
+           })
+        );
     }       
 }
 

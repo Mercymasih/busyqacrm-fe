@@ -7,7 +7,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
   
-  {path:'',component: LoginComponent,pathMatch: 'full'},
+  {path:'',component: SignupComponent,pathMatch: 'full'},
   {path:'loginuser',component: LoginComponent,pathMatch: 'full'},
   {path:'welcome',component: WelcomeComponent,pathMatch: 'full',canActivate:[AuthGuard]},
   {path:'signupuser',component: SignupComponent,pathMatch: 'full'}
