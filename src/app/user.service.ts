@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, throwError } from 'rxjs';
+import { Team } from './team.model';
 
 
 @Injectable({
@@ -28,4 +29,18 @@ export class UserService {
   
   }
 
+  fetchUsers() {
+    return this.http
+             .get<User[]>(environment.host + '/users');
+  }
+  fetchUser(idUser: number) {
+	  return this.http
+		         .get<User>(environment.host + '/users/' + idUser);
+  }
+  
+  public createTeam(team : Team):Observable<any>{
+    return this.http
+             .post<Team>(environment.host + '/createteam',
+             team);	  
+  }
 }

@@ -1,4 +1,4 @@
-<div class="container mt-5 w-75">
+<div class="container mt-2">
   <div class="alert alert-dismissible fade show mt-2" role="alert"
      *ngIf="show" [ngClass]="created ? 'alert-success' : 'alert-danger'" >
     <span *ngIf="created">{{msg}}</span>
@@ -7,7 +7,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="jumbotron bg-white border border-warning mt-3 py-4">
+  <div class="jumbotron bg-white border border-warning mt-3 px-md-4">
     <h3 class="display-5 mb-3" style="color:Tomato;">Sign up</h3> 
     <form #signupform="ngForm" (ngSubmit)="signupUser(signupform.value)">
     

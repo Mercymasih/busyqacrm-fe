@@ -14,6 +14,18 @@ export class UserAuthService {
     {"No-Auth":"True"}
   );
   constructor(private http: HttpClient,public router : Router) { }
+  
+  //set Role in local storage
+  public setRole(role : any){
+    localStorage.setItem("role",role);
+    return true;
+  }
+  //get Role from local storage
+  public getRole(): any{
+    let role : any = localStorage.getItem("role");
+    role = role === null ? undefined : role;
+    return (role);
+  }
 
   //get current user from the backend using '/current-user' endpoint
   public getCurrentUser(){

@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  host: 'http://busyqa-ec2.javadev.ca:8081'
+  host: 'http://ec2-3-139-90-56.us-east-2.compute.amazonaws.com:8081'
 };

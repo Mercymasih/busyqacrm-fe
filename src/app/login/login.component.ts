@@ -18,6 +18,7 @@ export class LoginComponent  {
   loggedIn :boolean= false;
   msg='';
   show :boolean = false;
+  isAdmin :boolean = false;
 
   constructor(private userService:UserService,private router: Router,
     private http: HttpClient,private authService:UserAuthService) { }
@@ -38,17 +39,32 @@ export class LoginComponent  {
           this.msg="Login Successful !!"
          //login-save token in local storage
          this.authService.setToken(response.token);
-
-         //get current User- save user in local storage
+         this.authService.setRole(response.role);
+         
+         //get current User
          this.authService.getCurrentUser().subscribe({
           next :(user: any) =>{
-            this.authService.setUser(user)
+            
+            this.authService.setUser(user);//save user in local storage
+            
             console.log(user);
             this.loggedIn= true;
-            //naviage to Welcome Page when login successfull
-            setTimeout(()=>{
-              this.router.navigate(['/welcome']);
-            },1500);
+            //console.log(response);
+              
+              if(user.role === 'Admin'){
+                
+                setTimeout(()=>{
+                  this.router.navigate(['/admin']);//navigate to Admin Page if user is Admin
+                },1500);
+              }else if(response.role === 'Simple_User' || 'Manager')
+              {
+               
+                //naviage to Welcome Page when login successful
+                setTimeout(()=>{
+                this.router.navigate(['/welcome']);
+                },1500);
+              }
+              
             
           },error: (error: any)=>{
             this.loggedIn= false;
@@ -74,4 +90,8 @@ export class LoginComponent  {
     this.loggedIn = false;
     
   }
+}
+
+function role(role: any) {
+  throw new Error('Function not implemented.');
 }

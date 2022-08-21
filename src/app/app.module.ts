@@ -9,9 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
-import { AuthInterceptor, authInterceptorProviders } from './auth/auth.interceptor';
+import { authInterceptorProviders } from './auth/auth.interceptor';
 import { UserService } from './user.service';
 import { UserAuthService } from './user-auth.service';
+import { TeamComponent } from './team/team.component';
+import { ListComponent } from './list/list.component';
+import { AdminComponent } from './admin/admin.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NavbarService } from './navbar.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -19,17 +25,22 @@ import { UserAuthService } from './user-auth.service';
     AppComponent,
     LoginComponent,
     WelcomeComponent,
-    SignupComponent
+    SignupComponent,
+    TeamComponent,
+    ListComponent,
+    AdminComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule,
     
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,NavbarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
