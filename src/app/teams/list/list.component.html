@@ -1,0 +1,27 @@
+
+<app-nav-bar ></app-nav-bar>
+ 
+    <table class="table table-striped table-hover mt-3">
+      <caption>List of Teams</caption>
+   <thead>
+   <tr>
+      <th scope="col">S.No.</th>
+      <th scope="col">Id</th>
+      <th scope="col">Team Name</th>
+      <th scope="col">DateOfCreation</th>
+      <th scope="col">#</th>
+      <th scope="col">#</th>
+    </tr>
+  </thead>
+  <tbody>
+     <tr *ngFor="let team of teams; let i = index" name="teams"
+       >
+       <td>{{ i + 1 }}</td>
+       <td>{{ team.id_team }}</td>
+       <td>{{ team.teamname}}</td>
+       <td>{{ team.date_of_creation }}</td>
+       <td><a routerLink="/update/{{team.id_team}}">Edit Team</a></td>
+       <td><a href="javascript:void(0);" (click)="onDeleteTeam(team.id_team)">Delete</a></td>
+     </tr>       
+ </tbody>
+ </table>

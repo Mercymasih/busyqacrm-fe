@@ -52,13 +52,13 @@ export class LoginComponent  {
             //console.log(response);
               
               if(user.role === 'Admin'){
-                
+                this.isAdmin=true;
                 setTimeout(()=>{
                   this.router.navigate(['/admin']);//navigate to Admin Page if user is Admin
                 },1500);
               }else if(response.role === 'Simple_User' || 'Manager')
               {
-               
+                this.isAdmin=false;
                 //naviage to Welcome Page when login successful
                 setTimeout(()=>{
                 this.router.navigate(['/welcome']);
@@ -92,6 +92,4 @@ export class LoginComponent  {
   }
 }
 
-function role(role: any) {
-  throw new Error('Function not implemented.');
-}
+

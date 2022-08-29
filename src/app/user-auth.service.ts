@@ -9,6 +9,9 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class UserAuthService {
+  getIdUser(arg0: string): number {
+    throw new Error('Method not implemented.');
+  }
 
   requestHeader= new HttpHeaders(
     {"No-Auth":"True"}
@@ -78,10 +81,10 @@ export class UserAuthService {
     return true;
   }
 
-  //Set User Detail
+  //Set User 
   public setUser(user: any)
   {
-    localStorage.setItem('user',JSON.stringify(user));
+    localStorage.setItem("user",JSON.stringify(user));
   }
 
   //get User 
@@ -93,6 +96,17 @@ export class UserAuthService {
       this.logout();
       return null;
     }
+  }
+  //get user id from the backend using 
+ public getUserId(): number{
+  let id_user : any =localStorage.getItem("id_user");
+   id_user = id_user === null ? undefined : id_user;
+  return (id_user);
+  }
+  //Set UserId
+  public setIdUser(id_user: any)
+  {
+    localStorage.setItem("id_user",JSON.stringify(id_user));
   }
 }
 

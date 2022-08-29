@@ -38,9 +38,18 @@ export class UserService {
 		         .get<User>(environment.host + '/users/' + idUser);
   }
   
-  public createTeam(team : Team):Observable<any>{
+  updateUser(user: User, idUser: number){
     return this.http
-             .post<Team>(environment.host + '/createteam',
-             team);	  
+             .put<User>(
+               environment.host + '/users/' + idUser,
+               user
+             );	  
   }
+
+  deleteUser(idUser: number){
+    return this.http
+             .delete(environment.host + '/users/' + idUser);	  
+  }
+
+  
 }

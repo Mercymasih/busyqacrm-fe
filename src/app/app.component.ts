@@ -12,16 +12,14 @@ import { UserAuthService } from './user-auth.service';
 })
 export class AppComponent {
   title = 'busyqacrm-fe';
-
-  constructor(
-              private app: UserService,
-              private http: HttpClient, 
-              private router: Router,
-              private authService:UserAuthService) {
+  
+  constructor(public authService :UserAuthService
+              ) {
       
    }
    //on clicking Logout button ,logout() method is called from authService
   onLogout(){
+    
     this.authService.logout();
 
   }
